@@ -1,10 +1,16 @@
 require("dotenv").config()
 
-const express = require("express")
-const cors = require("cors")
-const morgan = require("morgan")
+const express = require("express");
+const cors = require("cors");
+const morgan = require("morgan");
+const { prisma } = require("./utils/database");
 
-const app = express()
+const app = express();
+
+/* IMPORT ROUTERS */
+
+const booksRouter = require("./resources/books/router");
+const petsRouter = require("./resources/pets/router");
 
 /* SETUP MIDDLEWARE */
 
@@ -16,10 +22,14 @@ app.use(express.urlencoded({ extended: true }))
 app.use(morgan("dev"))
 
 /* SETUP ROUTES */
+console.log({ Book: prisma.book })
+
+app.use("/books", booksRouter)
+app.use("/pets", petsRouter)
 
 app.get("*", (req, res) => {
-  res.json({ ok: true })
-})
+  res.json({ ok: true });
+});
 
 /* START SERVER */
 
