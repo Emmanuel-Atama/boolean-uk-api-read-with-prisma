@@ -28,10 +28,10 @@ res.json ({ data: result})
 const getByFictionType = async (req, res) => {
     console.log({params: typeof req.params.type})
 
-const result = await prisma.book.book.findUnique({
+const result = await prisma.book.findUnique({
     where: {
-        type: req.params.type
-    },
+        type: 'fiction',
+    }
 });
 res.json ({ data: result})
 .catch((error) => {
